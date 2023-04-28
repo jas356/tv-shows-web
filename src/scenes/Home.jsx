@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-export default function Home({shows, setShows}) {
+export default function Home({shows, setShows, }) {
 
     useEffect(() => {
         fetch('https://tv-shows-api-jch.web.app/shows')
@@ -8,6 +8,16 @@ export default function Home({shows, setShows}) {
         .then(setShows)
         .catch(alert)
     }, [])
+
+    const handleDelete = (showId) => {
+      fetch(`https://tv-shows-api-jch.web.app/shows/${showId}`, {
+        method: "DELETE",
+        headers: { "Content-Type" : "application/json"}
+      })
+      .then(resp => resp.json())
+      .then(setShows)
+      .catch(alert)
+    }
 
     return(
         <div className="main-container" >
@@ -19,6 +29,7 @@ export default function Home({shows, setShows}) {
                 <img src={show.poster} alt="" />
                 <h2>{show.title}</h2>
                 <p>Seasons: {show.seasons}</p>
+                <button onClick={() => handleDelete(show.id)}>X</button>
                 </div>
             )
           )
