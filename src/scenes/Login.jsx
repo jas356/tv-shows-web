@@ -12,7 +12,7 @@ e.preventDefault()
 
 fetch('https://tv-shows-api-jch.web.app/login', {
     method: "POST",
-    header: {"Content-Type" : "application/json"},
+    headers: {"Content-Type" : "application/json"},
     body: JSON.stringify({email, password})
 })
 .then(resp => resp.json())
@@ -21,8 +21,9 @@ fetch('https://tv-shows-api-jch.web.app/login', {
         alert(data.message)
         return
     }
-    setUser(data)
-    navigate("/")
+    setUser(data.user) 
+    localStorage.setItem("token", data.token)
+    navigate("/addshow")
 })
 .catch(alert)
 }
